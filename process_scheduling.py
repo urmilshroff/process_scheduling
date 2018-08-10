@@ -2,7 +2,7 @@ class Process(object):
     def __init__(self,p_num):
         # self.pr=int(input("Enter Priority of process {}:\n".format(p_num)))
         self.bt=int(input("Enter Burst Time of process {}:\n".format(chr(p_num+65))))
-        self.at=int(input("Enter Arrival Time of process {}:\n".format(chr(p_num+65))))
+        # self.at=int(input("Enter Arrival Time of process {}:\n".format(chr(p_num+65))))
         
     # def get_pr(self):
     #     return self.pr
@@ -21,13 +21,26 @@ class Process(object):
 #         gandt_chart_timestamp.append(obj.get_bt)
 #     print("Times are {}".format(gandt_chart_timestamp))
 
+def fcfs(processes):
+    p_num,wt,tat=65,0,0
+    print("\n")
+    
+    for obj in processes:
+        print("Waiting Time for Process {} is {}ms".format(chr(p_num),wt))
+        # print("Turnaround Time for Process {} is {}ms".format(chr(p_num)))
+        wt=wt+obj.get_bt()
+        p_num+=1
+        avg_wt=(wt)/p_num
+        
+    print("Average Waiting Time is {}ms".format(avg_wt))
+
 processes=[] #list which contains Process class objects
 
 for p in range(int(input("Enter number of processes:\n"))):
     processes.append(Process(p)) #appends each object
     
 choice=int(input("Which scheduling algorithm do you want to use?\n1. FCFS\n2. SJF\n3. SRTF \n4. Round Robin\n5. Priority\n"))
-    
+
 # for obj in processes:
 #     print("Priority of process {} is {}".format(obj,obj.get_pr()))
 #     print("Priority of process {} is {}".format(obj,obj.get_bt()))
