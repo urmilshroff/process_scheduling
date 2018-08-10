@@ -2,7 +2,7 @@ class Process(object):
     def __init__(self,p_num):
         # self.pr=int(input("Enter Priority of process {}:\n".format(p_num)))
         self.bt=int(input("Enter Burst Time of process {}:\n".format(chr(p_num+65))))
-        # self.at=int(input("Enter Arrival Time of process {}:\n".format(chr(p_num+65))))
+        self.at=int(input("Enter Arrival Time of process {}:\n".format(chr(p_num+65))))
         
     # def get_pr(self):
     #     return self.pr
@@ -22,17 +22,17 @@ class Process(object):
 #     print("Times are {}".format(gandt_chart_timestamp))
 
 def fcfs(processes):
-    p_num,wt,tat=65,0,0
+    p_num,wt,tot_wt,tat=65,0,0,0
     print("\n")
     
     for obj in processes:
         print("Waiting Time for Process {} is {}ms".format(chr(p_num),wt))
         # print("Turnaround Time for Process {} is {}ms".format(chr(p_num)))
-        wt=wt+obj.get_bt()
+        wt=wt+obj.get_bt()-obj.get_at()
+        tot_wt+=wt
         p_num+=1
-        avg_wt=(wt)/p_num
         
-    print("Average Waiting Time is {}ms".format(avg_wt))
+    print("Average Waiting Time is {}ms".format(tot_wt/len(processes)))
 
 processes=[] #list which contains Process class objects
 
