@@ -1,3 +1,5 @@
+import numpy as np
+
 class Process(object):
     def __init__(self,p_num):
         self.bt=int(input("Enter Burst Time of process {}:\n".format(chr(p_num+65))))
@@ -52,7 +54,6 @@ def sjf(processes):
 
 
 
-processes=[] #list which contains Process class objects
 for p in range(int(input("Enter number of processes:\n"))):
     processes.append(Process(p)) #appends each object
     
