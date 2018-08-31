@@ -15,28 +15,25 @@ class Process(object):
         
 def sort(processes): #to sort Process objects by increasing BT
     new_processes=[]
-    print(len(processes))
     
-    for i in range(0,len(processes)): #starts from 0, loops size times
-        for j in range(0,len(processes)):
+    # for i in range(len(processes)): #starts from 0, loops size times
+    
+    for j in range(len(processes)):
+            prev_val=processes[j].get_bt()
+            next_val=processes[j+1].get_bt()
             
-            if j<len(processes):
-                prev_val=processes[j].get_bt()
-                next_val=processes[j+1].get_bt()
+            if next_val<prev_val: #if unsorted
+                new_processes.append(processes[j+1])
+                new_processes.append(processes[j])
                 
-                if next_val<prev_val: #if unsorted
-                    new_processes[i]=processes[j+1]
-                    new_processes[i+1]=processes[j]
-                    
-                else:
-                    new_processes[i]=processes[j]
-                    new_processes[i+1]=processes[j+1]
-                    
-    print(new_processes)
+            else: #if sorted
+                new_processes.append(processes[j])
+                new_processes.append(processes[j+1])
+                
     return new_processes
         
 def sjf(processes):
-    sort(processes)
+    print(sort(processes))
 
 def fcfs(processes):
     p_num,wt,tot_wt,tat=65,0,0,0
