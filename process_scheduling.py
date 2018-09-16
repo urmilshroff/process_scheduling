@@ -15,27 +15,22 @@ class Process(object):
     def get_pr(self):
         return self.pr
         
-# def sort(processes): #to sort Process objects by increasing BT
-#     new_processes=[]
-# 
-#     # for i in range(len(processes)): #starts from 0, loops size times
-# 
-#     for j in range(len(processes)):
-#             prev_val=processes[j].get_bt()
-#             next_val=processes[j+1].get_bt()
-# 
-#             if next_val<prev_val: #if unsorted
-#                 new_processes.append(processes[j+1])
-#                 new_processes.append(processes[j])
-# 
-#             else: #if sorted
-#                 new_processes.append(processes[j])
-#                 new_processes.append(processes[j+1])
-# 
-#     return new_processes
-# 
-# def sjf(processes):
-#     print(sort(processes))
+def sort(processes): #to sort Process objects by increasing BT
+
+    for i in range(processes.size): #some stupid range error
+        for j in range(processes.size):
+            prev_val=processes[j].get_bt()
+            next_val=processes[j+1].get_bt()
+            
+            if prev_val>next_val:
+                temp_obj=processes[j]
+                processes[j]=processes[j+1]
+                processes[j+1]=temp_obj
+                
+            print(processes[j],processes[j+1],prev_val,next_val)
+
+def sjf(processes):
+    sort(processes)
 
 def fcfs(processes):
     p_num,wt,tot_wt,tat=65,0,0,0
