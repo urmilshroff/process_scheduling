@@ -17,8 +17,8 @@ class Process(object):
         
 def sort(processes): #to sort Process objects by increasing BT
 
-    for i in range(processes.size): #some stupid range error
-        for j in range(processes.size):
+    for i in range(processes.size):
+        for j in range(processes.size-1):
             prev_val=processes[j].get_bt()
             next_val=processes[j+1].get_bt()
             
@@ -27,10 +27,13 @@ def sort(processes): #to sort Process objects by increasing BT
                 processes[j]=processes[j+1]
                 processes[j+1]=temp_obj
                 
-            print(processes[j],processes[j+1],prev_val,next_val)
+    return processes
 
 def sjf(processes):
-    sort(processes)
+    processes=sort(processes)
+    
+    for i in range(processes.size):
+        print(processes[i].get_bt)
 
 def fcfs(processes):
     p_num,wt,tot_wt,tat=65,0,0,0
