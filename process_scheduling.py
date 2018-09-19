@@ -26,8 +26,12 @@ class Process(object):
         return self.pr
         
         
-def process_arrived():
-    pass
+def process_arrived(tot_bt,at):
+    if tot_bt>at:
+        return True #if the Process has arrived
+        
+    else:
+        return False #if the Process has not yet arrived
         
         
 def sort(processes): #to sort Process objects by increasing BT
@@ -59,9 +63,8 @@ def fcfs(processes):
 def sjf(processes):
     processes=sort(processes)
     
-    for i in range(processes.size):
-        print("Process {} burst time is {}".format(chr(processes[i].get_pid()+65),processes[i].get_bt()))
-        
+    # for i in range(processes.size):
+    #     print("Process {} burst time is {}".format(chr(processes[i].get_pid()+65),processes[i].get_bt()))
         
         
 def srtf():
@@ -80,6 +83,7 @@ while True:
     try:
         processes=np.empty(int(input("Enter number of processes:\n")),object)
         break
+        
     except ValueError:
         print("Please enter a valid integer!\n")
 
@@ -90,13 +94,18 @@ choice=int(input("Which scheduling algorithm do you want to use?\n1. FCFS\n2. SJ
 
 if choice==1:
     fcfs(processes)
+    
 elif choice==2:
     sjf(processes)
+    
 elif choice==3:
     srtf(processes)
+    
 elif choice==4:
     roro(processes)
+    
 elif choice==5:
     prio(processes)
+    
 else:
     print("Invalid input!")
