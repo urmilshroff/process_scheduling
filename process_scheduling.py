@@ -2,9 +2,19 @@ import numpy as np
 
 class Process(object):
     def __init__(self,p_num):
-        self.bt=int(input("Enter Burst Time of process {}:\n".format(chr(p_num+65))))
-        self.at=int(input("Enter Arrival Time of process {}:\n".format(chr(p_num+65))))
-        self.pr=int(input("Enter Priority of process {}:\n".format(chr(p_num+65))))
+        self.pid=p_num #process id of each process
+        while True:
+            try:
+                self.bt=int(input("Enter Burst Time of process {}:\n".format(chr(self.pid+65)))) #converts it to letter
+                self.at=int(input("Enter Arrival Time of process {}:\n".format(chr(self.pid+65))))
+                self.pr=int(input("Enter Priority of process {}:\n".format(chr(self.pid+65))))
+                break
+                
+            except ValueError:
+                print("Please enter a valid integer!")
+        
+    def get_pid(self):
+        return self.pid
 
     def get_bt(self):
         return self.bt
@@ -15,43 +25,66 @@ class Process(object):
     def get_pr(self):
         return self.pr
         
+        
+def process_arrived():
+    pass
+        
+        
 def sort(processes): #to sort Process objects by increasing BT
 
     for i in range(processes.size):
         for j in range(processes.size-1):
-            prev_val=processes[j].get_bt()
-            next_val=processes[j+1].get_bt()
             
-            if prev_val>next_val:
+            if processes[j].get_bt() > processes[j+1].get_bt(): #swap
                 temp_obj=processes[j]
                 processes[j]=processes[j+1]
                 processes[j+1]=temp_obj
                 
     return processes
 
-def sjf(processes):
-    processes=sort(processes)
-    
-    for i in range(processes.size):
-        print(processes[i].get_bt)
 
 def fcfs(processes):
-    p_num,wt,tot_wt,tat=65,0,0,0
+    wt,tot_wt,tat=0,0,0
     print()
     
     for i in range(processes.size):
         wt=wt-processes[i].get_at()
         tot_wt+=wt
-        print("Waiting Time for Process {} is {}ms".format(chr(p_num),wt))
+        print("Waiting Time for Process {} is {}ms".format(chr(processes[i].get_pid()+65),wt))
         wt+=processes[i].get_bt()+processes[i].get_at()
-        p_num+=1
         
     print("\nAverage Waiting Time is {}ms".format(tot_wt/len(processes)))
+    
+    
+def sjf(processes):
+    processes=sort(processes)
+    
+    for i in range(processes.size):
+        print("Process {} burst time is {}".format(chr(processes[i].get_pid()+65),processes[i].get_bt()))
+        
+        
+        
+def srtf():
+    pass
+    
 
-processes=np.empty(int(input("Enter number of processes:\n")),object)
+def roro():
+    pass
+    
 
-for p in range(processes.size):
-    processes[p]=Process(p) #each Process object goes inside processes array
+def prio():
+    pass
+    
+
+while True:
+    try:
+        processes=np.empty(int(input("Enter number of processes:\n")),object)
+        break
+    except ValueError:
+        print("Please enter a valid integer!\n")
+
+for p_num in range(processes.size):
+    processes[p_num]=Process(p_num) #each Process object goes inside processes array
     
 choice=int(input("Which scheduling algorithm do you want to use?\n1. FCFS\n2. SJF\n3. SRTF \n4. Round Robin\n5. Priority\n"))
 
