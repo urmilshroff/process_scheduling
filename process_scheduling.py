@@ -27,27 +27,57 @@ class Process(object):
         return self.pr
         
         
-def process_arrived(tot_bt,at): #to check if the Process has actually arrived yet for SJF
-    if tot_bt>at:
+def process_arrived(tot_bt,at): #to check if the Process has actually arrived yet (for SJF)
+    if tot_bt>=at:
         return True
         
     else:
         return False
         
         
-def sort(processes): #to sort Process objects by increasing BT for SJF
-
-    for i in range(processes.size): #bubble sort
-        for j in range(processes.size-1):
+def sort(sorted_processes): #to sort Process objects for SJF
+    tot_bt=0
+    
+    for i in range(sorted_processes.size): #bubble sort
+        for j in range(sorted_processes.size-1):
             
-            if processes[j].get_bt() > processes[j+1].get_bt():
-                temp_obj=processes[j]
-                processes[j]=processes[j+1]
-                processes[j+1]=temp_obj
+            if sorted_processes[j].get_bt() > sorted_processes[j+1].get_bt():
+                tot_bt=tot_bt+sorted_processes[j+1].get_bt() #hypothetical test
                 
-    return processes
-
-
+                if process_arrived(tot_bt,sorted_processes[j+1].get_at()):
+                    temp_obj=sorted_processes[j]
+                    sorted_processes[j]=sorted_processes[j+1]
+                    sorted_processes[j+1]=temp_obj
+                    
+                else:
+                    tot_bt=tot_bt-sorted_processes[j+1].get_bt() #revert
+                
+    return sorted_processes
+    
+    
+def sjf(processes):
+    sorted_processes=sort(processes)
+    # wt,tot_wt,tot_bt,tat=0,0,0,0
+    # print()
+    # 
+    # for i in range(sorted_processes.size):
+    # 
+    #     if process_arrived(tot_bt,sorted_processes[i].get_at()): #if the Process has arrived
+    #         tot_bt=tot_bt+sorted_processes[i].get_bt()
+    #         wt=wt-sorted_processes[i].get_at()
+    #         tot_wt+=wt
+    #         print("Waiting Time for Process {} is {}ms".format(chr(sorted_processes[i].get_pid()+65),wt))
+    #         wt+=sorted_processes[i].get_bt()+sorted_processes[i].get_at()
+    # 
+    #     else: #Process with highest priority must be executed next
+    # 
+    # 
+    # print("\nAverage Waiting Time is {}ms\n".format(tot_wt/len(sorted_processes)))
+    
+    for i in range(sorted_processes.size): #prints new sorted array
+        print("Process {} burst time is {}".format(chr(processes[i].get_pid()+65),processes[i].get_bt()))
+    print()
+        
 def fcfs(processes):
     wt,tot_wt,tat=0,0,0
     print()
@@ -59,25 +89,7 @@ def fcfs(processes):
         wt+=processes[i].get_bt()+processes[i].get_at()
         
     print("\nAverage Waiting Time is {}ms\n".format(tot_wt/len(processes)))
-    
-    
-def sjf(processes):
-    processes=sort(processes)
-    wt,tot_wt,tot_bt,tat=0,0,0,0
-    print()
-    
-    for i in range(processes.size):
-        wt=wt-processes[i].get_at()
-        tot_wt+=wt
-        print("Waiting Time for Process {} is {}ms".format(chr(processes[i].get_pid()+65),wt))
-        wt+=processes[i].get_bt()+processes[i].get_at()
-        
-    print("\nAverage Waiting Time is {}ms\n".format(tot_wt/len(processes)))
-    
-    
-    # for i in range(processes.size):
-    #     print("Process {} burst time is {}".format(chr(processes[i].get_pid()+65),processes[i].get_bt()))
-        
+
         
 def srtf(processes): #not coded yet
     pass
@@ -122,7 +134,7 @@ while True:
             prio(processes)
             
         else:
-            print("\nPeace out!")
+            print("Peace out!\n")
             break
             
     except ValueError:
